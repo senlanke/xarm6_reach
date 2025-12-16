@@ -42,7 +42,7 @@ def delete_flag_file(flag_filename="rl_visu_flag"):
         return False
 
 class XarmEnv(gym.Env):
-    def __init__(self, visualize: bool = False):
+    def __init__(self, visualize: bool = False, max_steps: int = 1500): 
         super(XarmEnv, self).__init__()
         if not check_flag_file():
             write_flag_file()
@@ -104,7 +104,7 @@ class XarmEnv(gym.Env):
         # 添加阶段性奖励跟踪集合
         self._phase_rewards_given = set()
         self.step_count = 0
-        self.max_steps = 1500
+        self.max_steps = max_steps
 
     def _get_valid_goal(self) -> np.ndarray:
         """生成有效目标点"""
@@ -402,7 +402,7 @@ def test_ppo(
     model_path: str = "panda_ppo_reach_target",
     total_episodes: int = 5,
 ) -> None:
-    env = XarmEnv(visualize=True)
+    env = XarmEnv(visualize=True, max_steps=1000)
     model = PPO.load(model_path, env=env)
     
     record_gif = False
@@ -449,5 +449,5 @@ if __name__ == "__main__":
     else:
         test_ppo(
             model_path=MODEL_PATH,
-            total_episodes=15,
+            total_episodes=100,
         )

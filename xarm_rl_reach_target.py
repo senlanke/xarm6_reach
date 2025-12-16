@@ -51,7 +51,7 @@ class XarmEnv(gym.Env):
             self.visualize = False
         self.handle = None
 
-        self.model = mujoco.MjModel.from_xml_path('/ufactory_xarm6/scene.xml')
+        self.model = mujoco.MjModel.from_xml_path('ufactory_xarm6/scene.xml')
         self.data = mujoco.MjData(self.model)
         
         if self.visualize:
@@ -98,7 +98,7 @@ class XarmEnv(gym.Env):
         self.goal = np.zeros(3, dtype=np.float32)
         self.np_random = np.random.default_rng(None)
         self.prev_action = np.zeros(6, dtype=np.float32)
-        self.goal_threshold = 0.005
+        self.goal_threshold = 0.01
         self.current_orient_power = 2.0
         self.prev_dist_to_goal = np.inf
         # 添加阶段性奖励跟踪集合
@@ -433,8 +433,8 @@ def test_ppo(
 
 if __name__ == "__main__":
     delete_flag_file()
-    # TRAIN_MODE = False  # 设为True开启训练模式
-    TRAIN_MODE = True
+    TRAIN_MODE = False  # 设为True开启训练模式
+    # TRAIN_MODE = True
     MODEL_PATH = "assets/model/rl_reach_target_checkpoint/xarm_reach_target_v3"
     RESUME_MODEL_PATH = "assets/model/rl_reach_target_checkpoint/xarm_reach_target_v4"
     # RESUME_MODEL_PATH = None

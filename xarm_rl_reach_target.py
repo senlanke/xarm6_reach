@@ -406,12 +406,7 @@ def test_ppo(
     model = PPO.load(model_path, env=env)
     
     record_gif = False
-    frames = [] if record_gif else None
-    render_scene = None  
-    render_context = None 
-    pixel_buffer = None 
-    viewport = None
-    
+
     success_count = 0
     print(f"测试轮数: {total_episodes}")
     

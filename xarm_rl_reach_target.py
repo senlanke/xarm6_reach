@@ -41,9 +41,9 @@ def delete_flag_file(flag_filename="rl_visu_flag"):
     except Exception as e:
         return False
 
-class PandaObstacleEnv(gym.Env):
+class XarmEnv(gym.Env):
     def __init__(self, visualize: bool = False):
-        super(PandaObstacleEnv, self).__init__()
+        super(XarmEnv, self).__init__()
         if not check_flag_file():
             write_flag_file()
             self.visualize = visualize
@@ -51,7 +51,7 @@ class PandaObstacleEnv(gym.Env):
             self.visualize = False
         self.handle = None
 
-        self.model = mujoco.MjModel.from_xml_path('/home/lj402/.mujoco/models/mujoco_menagerie/ufactory_xarm6/scene.xml')
+        self.model = mujoco.MjModel.from_xml_path('/ufactory_xarm6/scene.xml')
         self.data = mujoco.MjData(self.model)
         
         if self.visualize:
@@ -358,7 +358,7 @@ def train_ppo(
     ENV_KWARGS = {'visualize': visualize}
     
     env = make_vec_env(
-        env_id=lambda: PandaObstacleEnv(** ENV_KWARGS),
+        env_id=lambda: XarmEnv(** ENV_KWARGS),
         n_envs=n_envs,
         seed=42,
         vec_env_cls=SubprocVecEnv,
@@ -402,7 +402,7 @@ def test_ppo(
     model_path: str = "panda_ppo_reach_target",
     total_episodes: int = 5,
 ) -> None:
-    env = PandaObstacleEnv(visualize=True)
+    env = XarmEnv(visualize=True)
     model = PPO.load(model_path, env=env)
     
     record_gif = False
@@ -440,9 +440,8 @@ if __name__ == "__main__":
     delete_flag_file()
     # TRAIN_MODE = False  # 设为True开启训练模式
     TRAIN_MODE = True
-    # MODEL_PATH = "assets/model/rl_reach_target_checkpoint/panda_ppo_reach_target_v1"
-    MODEL_PATH = "assets/model/rl_reach_target_checkpoint/xarm_new_ppo_reach_target_v5"
-    RESUME_MODEL_PATH = "assets/model/rl_reach_target_checkpoint/xarm_new_ppo_reach_target_v4"
+    MODEL_PATH = "assets/model/rl_reach_target_checkpoint/xarm_reach_target_v3"
+    RESUME_MODEL_PATH = "assets/model/rl_reach_target_checkpoint/xarm_reach_target_v4"
     # RESUME_MODEL_PATH = None
     if TRAIN_MODE:
         train_ppo(

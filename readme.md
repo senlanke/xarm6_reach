@@ -1,1 +1,2 @@
 ## xarm6机械臂使用PPO实现固定姿态Reach
+记录机械臂reach任务使用PPO实现固定姿态的代码

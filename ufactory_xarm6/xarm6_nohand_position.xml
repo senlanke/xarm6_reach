@@ -4,7 +4,7 @@
   <option integrator="implicitfast"/>  <!-- 仿真选项：使用implicitfast积分器 -->
 
   <default>  <!-- 默认属性定义部分 -->
-    <default class="xarm6">  <!-- 定义xarm7类的默认属性 -->
+    <default class="xarm6"> 
       <geom type="mesh" material="white"/>
     </default>
   </default>
